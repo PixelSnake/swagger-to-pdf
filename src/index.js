@@ -10,19 +10,25 @@ async function run() {
     Cli.flag.bool.default(false).short('v').long('verbose')
 
     const args = Cli.arguments
+    const doc = await getFile(args.source)
 
-    const file = await getFile(args.source)
-        .catch(err => console.log(err))
-
-    const doc = JSON.parse(file)
     SwaggerTex.generate(doc, args)
 }
 
 async function getFile(uri) {
     if (!uri.startsWith('http')) {
-        return fs.readFileSync(uri).toString()
+        const file = fs.readFileSync(uri).toString()
+        return JSON.parse(file)
     } else {
-        return http.get(uri)
+        const req = http.get(uri)
+
+        if (Cli.arguments.user && Cli.arguments.pass) {
+            basicAuth = new Buffer(`${Cli.arguments.user}:${Cli.arguments.pass}`).toString('base64')
+            req.set('Authorization', `Basic ${basicAuth}`)
+        }
+        
+        const res = await req
+        return res.body
     }
 }
 

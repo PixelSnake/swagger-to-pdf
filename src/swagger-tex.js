@@ -77,7 +77,6 @@ function generate(json, args) {
                 empty: !properties || properties.length < 1
             }
         })
-    console.log(tags[0]);
 
     const view = {
         title,
@@ -112,6 +111,8 @@ function generate(json, args) {
             if (args.verbose) console.log(data.toString());
         })
     }
+
+    console.log();
 }
 
 module.exports = {

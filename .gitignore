@@ -1,8 +1,8 @@
 node_modules
 
-.aux
-.log
-.out
-.pdf
-.tex
-.toc
+*.aux
+*.log
+*.out
+*.pdf
+*.tex
+*.toc
