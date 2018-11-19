@@ -8,6 +8,7 @@
 \usepackage{xltxtra,fontspec,xunicode}
 \usepackage{tabularx}
 \usepackage{url}
+\usepackage{hyperref}
 \usepackage[framemethod=tikz]{mdframed}
 
 \setromanfont[Numbers=Uppercase]{Fira Sans}
@@ -105,7 +106,10 @@
                         \textbf{Name} & \textbf{Where} & \textbf{Type} \\
                         \hline
                         !(#parameters)
-                            !(name) & !(in) & !(type) & required \\
+                            !(name) & !(in) & !(type) &
+                            !(#required) \textbf{required} !(/required)
+                            !(^required) optional !(/required)
+                            \\
                         !(/parameters)
                     \end{tabularx}
 
@@ -115,7 +119,13 @@
                         \textbf{Status} & & \textbf{Response} \\
                         \hline
                         !(#responses)
-                            !(status) & !(description) & !(schema) \\
+                            !(status) & !(description) & 
+                            !(#schemaLink)
+                                \nameref{!(schemaLink)} \\
+                            !(/schemaLink)
+                            !(^schemaLink)
+                                !(schema) \\
+                            !(/schemaLink)
                         !(/responses)
                     \end{tabularx}
                 \end{flushleft}
@@ -126,14 +136,20 @@
     \section{Models}
         !(#definitions)
             \subsection{!(name)}
+            \label{!(label)}
             
-            \begin{tabularx}{\textwidth}{lZ}
-                \textbf{Key} & \textbf{Type} \\
-                \hline
-                !(#properties)
-                    !(name) & !(type) \\
-                !(/properties)
-            \end{tabularx}
+            !(^empty)
+                \begin{tabularx}{\textwidth}{lZ}
+                    \textbf{Key} & \textbf{Type} \\
+                    \hline
+                    !(#properties)
+                        !(name) & !(type) \\
+                    !(/properties)
+                \end{tabularx}
+            !(/empty)
+            !(#empty)
+                This model is empty
+            !(/empty)
         !(/definitions)
         
 \end{document}

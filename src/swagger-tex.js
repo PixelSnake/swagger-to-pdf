@@ -31,8 +31,10 @@ function generate(json, args) {
                             responses: Object.keys(route.responses).map(status => {
                                 const response = route.responses[status]
                                 let schema = '-'
+                                let schemaLink
                                 if (response.schema && response.schema.$ref) {
                                     schema = response.schema.$ref.split('/')[2]
+                                    schemaLink = md5(schema)
                                 } else if (response.schema) {
                                     schema = JSON.stringify(response.schema)
                                 }
@@ -41,7 +43,8 @@ function generate(json, args) {
                                 return {
                                     status,
                                     ...response,
-                                    schema
+                                    schema,
+                                    schemaLink
                                 }
                             })
                         }
@@ -58,17 +61,20 @@ function generate(json, args) {
     const definitions = Object.keys(json.definitions)
         .map(def => {
             const definition = json.definitions[def]
+            const properties = definition.properties && Object.keys(definition.properties)
+                .map(prop => {
+                    const property = definition.properties[prop]
+                    return {
+                        name: prop,
+                        ...property
+                    }
+                })
             return {
                 name: def,
                 ...definition,
-                properties: definition.properties && Object.keys(definition.properties)
-                    .map(prop => {
-                        const property = definition.properties[prop]
-                        return {
-                            name: prop,
-                            ...property
-                        }
-                    })
+                label: md5(def),
+                properties,
+                empty: !properties || properties.length < 1
             }
         })
     console.log(tags[0]);
@@ -96,13 +102,16 @@ function generate(json, args) {
     const texDir = path.join(__dirname, '..', 'tex')
     process.chdir(texDir)
 
-    const pdflatex = spawn('xelatex', ['doc.tex'])
-    pdflatex.stdout.on('data', data => {
-        if (args.verbose) console.log(data.toString());
-    })
-    pdflatex.stderr.on('data', data => {
-        if (args.verbose) console.log(data.toString());
-    })
+    // 2 times for toc and references
+    for (var i = 0; i < 2; ++i) {
+        const pdflatex = spawn('xelatex', ['doc.tex'])
+        pdflatex.stdout.on('data', data => {
+            if (args.verbose) console.log(data.toString());
+        })
+        pdflatex.stderr.on('data', data => {
+            if (args.verbose) console.log(data.toString());
+        })
+    }
 }
 
 module.exports = {

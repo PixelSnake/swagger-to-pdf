@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon . -w src -w tex/doc.tex.mustache -- -v",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon . -w src -w tex/doc.tex.mustache -- -v"
   },
   "author": "Thomas Neumüller",
   "license": "ISC",
