@@ -1,0 +1,139 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[10pt]{article}
+
+\usepackage[ngerman]{babel}
+\usepackage{xcolor}
+\usepackage{xltxtra,fontspec,xunicode}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage[framemethod=tikz]{mdframed}
+
+\setromanfont[Numbers=Uppercase]{Fira Sans}
+\setmainfont[BoldFont={Fira Sans Medium}]{Fira Sans}
+
+\definecolor{tresmo}{HTML}{00aeef}
+
+\def\arraystretch{1.5}
+
+\newcolumntype{Z}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
+
+\definecolor{get}{HTML}{0f6ab4}
+\definecolor{post}{HTML}{10a54a}
+\definecolor{patch}{HTML}{D38042}
+\definecolor{delete}{HTML}{a41e22}
+
+\mdfdefinestyle{get}{
+    roundcorner=2pt,
+    backgroundcolor=get,
+    linecolor=get,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\mdfdefinestyle{post}{
+    roundcorner=2pt,
+    backgroundcolor=post,
+    linecolor=post,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\mdfdefinestyle{patch}{
+    roundcorner=2pt,
+    backgroundcolor=patch,
+    linecolor=patch,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\mdfdefinestyle{delete}{
+    roundcorner=2pt,
+    backgroundcolor=delete,
+    linecolor=delete,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+
+\newcommand{\method}[2]{
+    \begin{mdframed}[style=#1]
+        \color{white}
+        \begin{tabularx}{\textwidth}{lX}
+            \MakeUppercase{\textbf{#1}} & #2 \\
+        \end{tabularx}
+    \end{mdframed}
+}
+
+\newenvironment{absolutelynopagebreak}
+  {\par\nobreak\vfil\penalty0\vfilneg
+   \vtop\bgroup}
+  {\par\xdef\tpd{\the\prevdepth}\egroup
+   \prevdepth=\tpd}
+
+\begin{document}
+    \title{\color{tresmo}\textbf{!(title)}}
+    \author{Version !(version)}
+    \maketitle
+    \newpage
+
+    \tableofcontents
+
+    !(#tags)
+        \newpage
+        \section{!(description)}
+
+        !(#paths)
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{!(summary)}
+                \label{route:!(label)}
+                \method{!(method)}{\url{!({path})}}
+
+                \begin{flushleft}
+                    !(summary)
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                        !(#parameters)
+                            !(name) & !(in) & !(type) & required \\
+                        !(/parameters)
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                        !(#responses)
+                            !(status) & !(description) & !(schema) \\
+                        !(/responses)
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+        !(/paths)
+    !(/tags)
+
+    \section{Models}
+        !(#definitions)
+            \subsection{!(name)}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                !(#properties)
+                    !(name) & !(type) \\
+                !(/properties)
+            \end{tabularx}
+        !(/definitions)
+        
+\end{document}

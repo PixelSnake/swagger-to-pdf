@@ -1,0 +1,2112 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[10pt]{article}
+
+\usepackage[ngerman]{babel}
+\usepackage{xcolor}
+\usepackage{xltxtra,fontspec,xunicode}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage[framemethod=tikz]{mdframed}
+
+\setromanfont[Numbers=Uppercase]{Fira Sans}
+\setmainfont[BoldFont={Fira Sans Medium}]{Fira Sans}
+
+\definecolor{tresmo}{HTML}{00aeef}
+
+\def\arraystretch{1.5}
+
+\newcolumntype{Z}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
+
+\definecolor{get}{HTML}{0f6ab4}
+\definecolor{post}{HTML}{10a54a}
+\definecolor{patch}{HTML}{D38042}
+\definecolor{delete}{HTML}{a41e22}
+
+\mdfdefinestyle{get}{
+    roundcorner=2pt,
+    backgroundcolor=get,
+    linecolor=get,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\mdfdefinestyle{post}{
+    roundcorner=2pt,
+    backgroundcolor=post,
+    linecolor=post,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\mdfdefinestyle{patch}{
+    roundcorner=2pt,
+    backgroundcolor=patch,
+    linecolor=patch,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\mdfdefinestyle{delete}{
+    roundcorner=2pt,
+    backgroundcolor=delete,
+    linecolor=delete,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+
+\newcommand{\method}[2]{
+    \begin{mdframed}[style=#1]
+        \color{white}
+        \begin{tabularx}{\textwidth}{lX}
+            \MakeUppercase{\textbf{#1}} & #2 \\
+        \end{tabularx}
+    \end{mdframed}
+}
+
+\newenvironment{absolutelynopagebreak}
+  {\par\nobreak\vfil\penalty0\vfilneg
+   \vtop\bgroup}
+  {\par\xdef\tpd{\the\prevdepth}\egroup
+   \prevdepth=\tpd}
+
+\begin{document}
+    \title{\color{tresmo}\textbf{UMSEMA API}}
+    \author{Version 1.2.2}
+    \maketitle
+    \newpage
+
+    \tableofcontents
+
+        \newpage
+        \section{Resources which are handled directly by tresmo}
+
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get information about the logged in user.}
+                \label{route:69c57cc592867ef97d2665bd2eecff22}
+                \method{get}{\url{/api/users/me}}
+
+                \begin{flushleft}
+                    Get information about the logged in user.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Object containing information about the logged-in user & Model 3 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{A list of users per customer}
+                \label{route:3e1f832ebcff761772f5678a99dee86f}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/users}}
+
+                \begin{flushleft}
+                    A list of users per customer
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of users by customer & Model 24 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{A list of users per task site (no owner).}
+                \label{route:578988007bd0945f09e2b2c00a36433a}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/users}}
+
+                \begin{flushleft}
+                    A list of users per task site (no owner).
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of task site users & Model 24 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{A list of task site permissions.}
+                \label{route:e4e6f79d7a7ca8d24efd89d065eb884c}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/permissions}}
+
+                \begin{flushleft}
+                    A list of task site permissions.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Get permissions for a task site, grouped by user (default) or invitation. & Model 36 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Create a (user) session.}
+                \label{route:1aa49dcc6af08b8433f9e9a153a86774}
+                \method{post}{\url{/api/companies/{companyId}/sessions}}
+
+                \begin{flushleft}
+                    Create a (user) session.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            email & formData & string & required \\
+                            password & formData & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & Model 40 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Missing Authentication & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Create an admin. Session authentication is mandatory.}
+                \label{route:6bd0e209f0bb6876346b0872e7135404}
+                \method{post}{\url{/api/companies/{companyId}/customers/{customerId}/admins}}
+
+                \begin{flushleft}
+                    Create an admin. Session authentication is mandatory.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            email & formData & string & required \\
+                            documents & formData & boolean & required \\
+                            reports & formData & boolean & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Missing Authentication & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Update an admin. Session authentication is mandatory.}
+                \label{route:0156e1b1e7fbbc135b7e1399478f24ea}
+                \method{patch}{\url{/api/companies/{companyId}/customers/{customerId}/admins}}
+
+                \begin{flushleft}
+                    Update an admin. Session authentication is mandatory.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            email & formData & string & required \\
+                            documents & formData & boolean & required \\
+                            reports & formData & boolean & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Missing Authentication & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Creates an support message to related email.}
+                \label{route:5621c8f378cf354560a1891ae5a2c558}
+                \method{post}{\url{/api/companies/{companyId}/customers/{customerId}/supports}}
+
+                \begin{flushleft}
+                    Creates an support message to related email.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            subject & formData & string & required \\
+                            phone & formData & string & required \\
+                            message & formData & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Missing Authentication & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Create an user with all its permission. Session authentication is mandatory.}
+                \label{route:499904f5bad4fa122a0b184017179f78}
+                \method{post}{\url{/api/companies/{companyId}/customers/{customerId}/permissions}}
+
+                \begin{flushleft}
+                    Create an user with all its permission. Session authentication is mandatory.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            email & formData & string & required \\
+                            permissions & formData & array & required \\
+                            comment & formData & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Patch the users permission for one customer exclusively.}
+                \label{route:9be1a3d610b0490b1aba4881c90f9b96}
+                \method{patch}{\url{/api/companies/{companyId}/customers/{customerId}/permissions}}
+
+                \begin{flushleft}
+                    Patch the users permission for one customer exclusively.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            email & formData & string & required \\
+                            permissions & formData & array & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & User activated & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Patch the user data structure to activate the account.}
+                \label{route:71bcc11597aa46b98e00ff664b2df0dd}
+                \method{patch}{\url{/api/users/activate}}
+
+                \begin{flushleft}
+                    Patch the user data structure to activate the account.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            email & formData & string & required \\
+                            token & formData & string & required \\
+                            firstname & formData & string & required \\
+                            lastname & formData & string & required \\
+                            salutation & formData & string & required \\
+                            password & formData & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & User activated & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Patch the user data structure to produce a token for a new password or set the new password.}
+                \label{route:686a518d789cf793eadd08edd301a134}
+                \method{patch}{\url{/api/users/password}}
+
+                \begin{flushleft}
+                    Patch the user data structure to produce a token for a new password or set the new password.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            email & query & string & required \\
+                            password & formData & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            202 & Returns an email to the user if known & - \\
+                            400 & Bad Request / Validation Error & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+        \newpage
+        \section{Resources related to tegos}
+
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get materials for this company.}
+                \label{route:2107878f30e452680d95d0eb48e47206}
+                \method{get}{\url{/api/companies/{companyId}/materials}}
+
+                \begin{flushleft}
+                    Get materials for this company.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of equipment objects & Model 5 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get categories for this company.}
+                \label{route:eb20e8df1281f8c0a9f8bd9f2a905ca7}
+                \method{get}{\url{/api/companies/{companyId}/categories}}
+
+                \begin{flushleft}
+                    Get categories for this company.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of category objects & Model 7 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get dates per zipcode.}
+                \label{route:2e6f3d56aaa58a73124378f179de7b29}
+                \method{get}{\url{/api/companies/{companyId}/dates}}
+
+                \begin{flushleft}
+                    Get dates per zipcode.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            zip & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of dates & Model 9 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get equipments for this company.}
+                \label{route:8962c1ee93fce84546ad4966497bce3c}
+                \method{get}{\url{/api/companies/{companyId}/equipments}}
+
+                \begin{flushleft}
+                    Get equipments for this company.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of equipment objects & Model 11 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get contract templates for this company.}
+                \label{route:7be68e50360849bda6df94ebfa5382df}
+                \method{get}{\url{/api/companies/{companyId}/contracttemplates}}
+
+                \begin{flushleft}
+                    Get contract templates for this company.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of contractTemplate objects & Model 14 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get customer details.}
+                \label{route:723623440d402a8ab415cb01564b8332}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}}}
+
+                \begin{flushleft}
+                    Get customer details.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Customer object & customer \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get file.}
+                \label{route:3e0e098f7fab79fc52796f9575027abf}
+                \method{get}{\url{/api/companies/{companyId}/downloads/{type}}}
+
+                \begin{flushleft}
+                    Get file.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            type & path & string & required \\
+                            mimeType & path & string & required \\
+                            ref & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Archive reference & \{''type'':''string''\} \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get report types for this customer.}
+                \label{route:8161b9fd4d9c7f418f86ae6d8d97b816}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/report-types}}
+
+                \begin{flushleft}
+                    Get report types for this customer.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of report types objects & Model 21 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get task sites per customer.}
+                \label{route:5188171d035a10204366dcc73a9279b9}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites}}
+
+                \begin{flushleft}
+                    Get task sites per customer.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of task site objects & Model 23 \\
+                            400 & Bad Request / Validation Error & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Create a tasksite. User information will be added on backend call.}
+                \label{route:386920d48d660f5c73e0b9e0f01c7492}
+                \method{post}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites}}
+
+                \begin{flushleft}
+                    Create a tasksite. User information will be added on backend call.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            name & formData & string & required \\
+                            name2 & formData & string & required \\
+                            address & formData & string & required \\
+                            postcode & formData & string & required \\
+                            city & formData & string & required \\
+                            phone & formData & string & required \\
+                            templateCode & formData & string & required \\
+                            templateVariant & formData & string & required \\
+                            quantity & formData & number & required \\
+                            taskDate & formData & string & required \\
+                            comment & formData & string & required \\
+                            extDocNo & formData & string & required \\
+                            sendEmail & formData & boolean & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Missing Authentication & - \\
+                            404 & Not Found & - \\
+                            409 & Conflict & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get contracts per customer.}
+                \label{route:02d5b77b44d8be7b0f94e1f9f6531204}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/contracts}}
+
+                \begin{flushleft}
+                    Get contracts per customer.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of contracts & Model 29 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get a list of reports for this customer.}
+                \label{route:18cae791ac629c91d346091490a22f29}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/reports}}
+
+                \begin{flushleft}
+                    Get a list of reports for this customer.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            from & query & string & required \\
+                            to & query & string & required \\
+                            creatorMail & query & string & required \\
+                            status & query & string & required \\
+                            no & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of reports & Model 31 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Create a report. User information will be added on backend call.}
+                \label{route:47f28dd048de377a2ddaa5d10839eea9}
+                \method{post}{\url{/api/companies/{companyId}/customers/{customerId}/reports}}
+
+                \begin{flushleft}
+                    Create a report. User information will be added on backend call.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            code & formData & string & required \\
+                            parameters & formData & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get documents per customer.}
+                \label{route:52d82daaee10e345e736d3370c6a7962}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/documents}}
+
+                \begin{flushleft}
+                    Get documents per customer.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            from & query & string & required \\
+                            to & query & string & required \\
+                            type & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of document objects & Model 33 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get one task site.}
+                \label{route:43aa013a257f7fd34a07f44535a04909}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}}}
+
+                \begin{flushleft}
+                    Get one task site.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Task site object & Model 22 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Delete single tasksite.}
+                \label{route:3d14bb1c2825d99b6f2f24ac299ab54c}
+                \method{delete}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}}}
+
+                \begin{flushleft}
+                    Delete single tasksite.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get a specific report for this customer.}
+                \label{route:f20dfc54a366195fdc7e3de019d08f39}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/reports/{reportId}}}
+
+                \begin{flushleft}
+                    Get a specific report for this customer.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            reportId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & One specific reports & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Delete report.}
+                \label{route:40b770872d7be11518aeb1e210eea451}
+                \method{delete}{\url{/api/companies/{companyId}/customers/{customerId}/reports/{reportId}}}
+
+                \begin{flushleft}
+                    Delete report.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            reportId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get contracts per tasksite.}
+                \label{route:25ab66e2e6eb9b6b92f75182301710ed}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/contracts}}
+
+                \begin{flushleft}
+                    Get contracts per tasksite.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of contracts & Model 29 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Create a contract. User information will be added on backend call.}
+                \label{route:bd0d31470fd6d2e5bbbb393550612adf}
+                \method{post}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/contracts}}
+
+                \begin{flushleft}
+                    Create a contract. User information will be added on backend call.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                            templateCode & formData & string & required \\
+                            templateVariant & formData & string & required \\
+                            quantity & formData & number & required \\
+                            taskDate & formData & string & required \\
+                            comment & formData & string & required \\
+                            extDocNo & formData & string & required \\
+                            sendEmail & formData & boolean & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Missing Authentication & - \\
+                            404 & Not Found & - \\
+                            409 & Conflict & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get documents per tasksite and customer.}
+                \label{route:657faa916cc1a17ab34a4f8660e41e7a}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/documents}}
+
+                \begin{flushleft}
+                    Get documents per tasksite and customer.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                            from & query & string & required \\
+                            to & query & string & required \\
+                            type & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of document objects & Model 33 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{A list of orders per task site.}
+                \label{route:681a20ee303c11ef1c25ab6a04af851f}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/orders}}
+
+                \begin{flushleft}
+                    A list of orders per task site.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                            status & query & string & required \\
+                            from & query & string & required \\
+                            to & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Colleciton of task site objects & Model 39 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Create a new order. User information will be added on backend call.}
+                \label{route:5743ac44b5e8373c2dc973baa1c2b897}
+                \method{post}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/orders}}
+
+                \begin{flushleft}
+                    Create a new order. User information will be added on backend call.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                            contractId & formData & string & required \\
+                            lineNo & formData & integer & required \\
+                            taskDate & formData & string & required \\
+                            comment & formData & string & required \\
+                            quantity & formData & number & required \\
+                            sendEmail & formData & boolean & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get inventories per tasksite and customer.}
+                \label{route:57fc8cec1b90d397a99d537617389e05}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/inventories}}
+
+                \begin{flushleft}
+                    Get inventories per tasksite and customer.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of inventory objects & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get single order.}
+                \label{route:e148fe8bd27233e31f4fee9926ae23fe}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/orders/{orderId}}}
+
+                \begin{flushleft}
+                    Get single order.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & integer & required \\
+                            customerId & path & integer & required \\
+                            tasksiteId & path & string & required \\
+                            orderId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Order object & Model 38 \\
+                            400 & Bad Request / Validation Error & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Delete single order.}
+                \label{route:0bd8f6d3f8c388b47829f1dfa935ae06}
+                \method{delete}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/orders/{orderId}}}
+
+                \begin{flushleft}
+                    Delete single order.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                            orderId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get contract dates per tasksite.}
+                \label{route:bc02740963f6ac5d07ef3a5628b66c57}
+                \method{get}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/contracts/{contractId}/dates}}
+
+                \begin{flushleft}
+                    Get contract dates per tasksite.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            x-session-token & header & string & required \\
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                            contractId & path & string & required \\
+                            lineNo & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & Collection of contract dates & Model 9 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Delete a contract.}
+                \label{route:3c6de7a00630b92e58e1de2ea007cfac}
+                \method{delete}{\url{/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/contracts/{contractId}}}
+
+                \begin{flushleft}
+                    Delete a contract.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            tasksiteId & path & string & required \\
+                            contractId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Missing Authentication & - \\
+                            404 & Not Found & - \\
+                            409 & Conflict & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+        \newpage
+        \section{Resources redirecting to frontend pages}
+
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Verify a password reset token.}
+                \label{route:b43e91028824ce079ae0acf4d969ff6d}
+                \method{get}{\url{/verifiers/password-reset}}
+
+                \begin{flushleft}
+                    Verify a password reset token.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            token & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Validation error & - \\
+                            401 & Unauthorized & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Verify an user.}
+                \label{route:ea01a03f195c361f1d6f3800cb8248a6}
+                \method{get}{\url{/verifiers/users}}
+
+                \begin{flushleft}
+                    Verify an user.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            token & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Validation error & - \\
+                            401 & Unauthorized & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+        \newpage
+        \section{Resources which can be called with BASIC auth}
+
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get all users.}
+                \label{route:516765b2238a5f9f6a8c681cfe6a5bad}
+                \method{get}{\url{/api/ext/companies/{companyId}/users}}
+
+                \begin{flushleft}
+                    Get all users.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            role & query & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & Model 18 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Get all users.}
+                \label{route:2ba369dc327f30d0ac28ec25182b715e}
+                \method{get}{\url{/api/ext/companies/{companyId}/customers/{customerId}/users}}
+
+                \begin{flushleft}
+                    Get all users.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & Model 24 \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Delete an owner.}
+                \label{route:490ffd4d55bd0716211d909b41ba8750}
+                \method{delete}{\url{/api/ext/companies/{companyId}/customers/{customerId}/owners/{email}}}
+
+                \begin{flushleft}
+                    Delete an owner.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            email & path & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Unauthorized & - \\
+                            403 & Forbidden & - \\
+                            404 & Not Found & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+            \vspace{.5cm}
+            \begin{absolutelynopagebreak}
+                \addcontentsline{toc}{subsection}{Create an owner. BASIC authentication is mandatory.}
+                \label{route:0a473c7306f6af9f6da2687979bd6926}
+                \method{post}{\url{/api/ext/companies/{companyId}/customers/{customerId}/owners}}
+
+                \begin{flushleft}
+                    Create an owner. BASIC authentication is mandatory.
+                    \vspace{.25cm}
+
+                    \paragraph{Parameters}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXlr}
+                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                        \hline
+                            companyId & path & string & required \\
+                            customerId & path & string & required \\
+                            email & formData & string & required \\
+                    \end{tabularx}
+
+                    \paragraph{Response}\mbox{}\\
+                    \vspace{.25cm}
+                    \begin{tabularx}{\textwidth}{lXZ}
+                        \textbf{Status} & & \textbf{Response} \\
+                        \hline
+                            200 & OK & \{''type'':''string''\} \\
+                            400 & Bad Request / Validation Error & - \\
+                            401 & Missing Authentication & - \\
+                            404 & Not Found & - \\
+                            409 & Conflict / User already has admin permissions & - \\
+                    \end{tabularx}
+                \end{flushleft}
+            \end{absolutelynopagebreak}
+
+    \section{Models}
+            \subsection{user}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    id & string \\
+                    firstname & string \\
+                    lastname & string \\
+                    email & string \\
+                    salutation & string \\
+                    status & string \\
+                    createdAt & string \\
+                    tokenExpireDate & string \\
+            \end{tabularx}
+            \subsection{salesPerson}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    name & string \\
+                    email & string \\
+                    phoneNo & string \\
+                    picture & string \\
+            \end{tabularx}
+            \subsection{customer}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    no & string \\
+                    blocked & boolean \\
+                    name & string \\
+                    name2 & string \\
+                    address & string \\
+                    postcode & string \\
+                    city & string \\
+                    salesPerson & object \\
+            \end{tabularx}
+            \subsection{Model 1}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    companyId & string \\
+                    customerId & string \\
+                    tasksiteId & string \\
+                    userId & string \\
+                    isOwner & boolean \\
+                    isAdmin & boolean \\
+                    reports & boolean \\
+                    documents & boolean \\
+            \end{tabularx}
+            \subsection{permissions}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 2}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    customer & object \\
+                    permissions & array \\
+            \end{tabularx}
+            \subsection{customers}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 3}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    user & object \\
+                    customers & array \\
+            \end{tabularx}
+            \subsection{Model 4}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    code & string \\
+                    description & string \\
+                    description2 & string \\
+                    comment & string \\
+                    iconRef & string \\
+            \end{tabularx}
+            \subsection{Model 5}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 6}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    code & string \\
+                    description & string \\
+                    description2 & string \\
+                    comment & string \\
+                    iconRef & string \\
+            \end{tabularx}
+            \subsection{Model 7}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 8}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    date & string \\
+                    available & boolean \\
+                    type & string \\
+                    orderNo & string \\
+            \end{tabularx}
+            \subsection{Model 9}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 10}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    code & string \\
+                    description & string \\
+                    description2 & string \\
+                    comment & string \\
+                    iconRef & string \\
+                    height & number \\
+                    width & number \\
+                    depth & number \\
+                    volume & number \\
+            \end{tabularx}
+            \subsection{Model 11}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 12}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    lineNo & string \\
+                    equipmentType & number \\
+                    description & string \\
+                    quantity & string \\
+                    uom & string \\
+            \end{tabularx}
+            \subsection{lines}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 13}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    code & string \\
+                    variant & string \\
+                    description & string \\
+                    equipmentCode & string \\
+                    categoryCode & string \\
+                    materialCode & string \\
+                    lines & array \\
+            \end{tabularx}
+            \subsection{Model 14}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 15}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    customerId & string \\
+                    permissions & array \\
+            \end{tabularx}
+            \subsection{Model 16}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 17}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    user & object \\
+                    customers & array \\
+            \end{tabularx}
+            \subsection{Model 18}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 19}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    code & string \\
+                    title & string \\
+                    description & string \\
+                    type & string \\
+            \end{tabularx}
+            \subsection{parameters}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 20}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    code & string \\
+                    title & string \\
+                    description & string \\
+                    mimeType & string \\
+                    parameters & array \\
+            \end{tabularx}
+            \subsection{Model 21}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 22}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    code & string \\
+                    name & string \\
+                    name2 & string \\
+                    address & string \\
+                    postcode & string \\
+                    city & string \\
+                    status & string \\
+            \end{tabularx}
+            \subsection{Model 23}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 24}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 25}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    code & string \\
+                    description & string \\
+                    nextDate & string \\
+                    lastDate & string \\
+            \end{tabularx}
+            \subsection{cycle}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 26}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    lineNo & string \\
+                    equipmentType & number \\
+                    description & string \\
+                    quantity & string \\
+                    uom & string \\
+                    cycle & array \\
+            \end{tabularx}
+            \subsection{Model 27}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 28}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    no & string \\
+                    taskSiteCode & string \\
+                    description & string \\
+                    equipmentCode & string \\
+                    categoryCode & string \\
+                    materialCode & string \\
+                    status & string \\
+                    lines & array \\
+            \end{tabularx}
+            \subsection{Model 29}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 30}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    no & string \\
+                    code & string \\
+                    createdAt & string \\
+                    title & string \\
+                    status & string \\
+                    statusMessage & string \\
+                    mimeType & string \\
+                    creatorMail & string \\
+            \end{tabularx}
+            \subsection{Model 31}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 32}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    no & string \\
+                    taskSiteCode & string \\
+                    postingDate & string \\
+                    documentDate & string \\
+                    amount & number \\
+                    amountInclVAT & number \\
+                    type & number \\
+                    archiveRef & string \\
+                    zipRef & string \\
+            \end{tabularx}
+            \subsection{Model 33}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 34}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    id & string \\
+                    email & string \\
+                    firstname & string \\
+                    lastname & string \\
+            \end{tabularx}
+            \subsection{Model 35}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    createdAt & string \\
+                    user & object \\
+                    tasksiteId & string \\
+                    customerId & string \\
+                    companyId & string \\
+                    type & string \\
+            \end{tabularx}
+            \subsection{Model 36}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 37}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    timestamp & string \\
+                    name & string \\
+                    type & string \\
+                    trackingNo & string \\
+                    description & string \\
+            \end{tabularx}
+            \subsection{tracking}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{creator}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    firstName & string \\
+                    lastName & string \\
+                    email & string \\
+            \end{tabularx}
+            \subsection{Model 38}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    no & string \\
+                    taskSiteCode & string \\
+                    equipmentCode & string \\
+                    categoryCode & string \\
+                    materialCode & string \\
+                    deliveryNo & string \\
+                    lineNo & integer \\
+                    equipmentType & number \\
+                    description & string \\
+                    uom & string \\
+                    quantity & number \\
+                    taskDate & string \\
+                    status & string \\
+                    source & string \\
+                    comment & string \\
+                    isFromCycle & boolean \\
+                    archiveRef & string \\
+                    tracking & array \\
+                    creator & object \\
+            \end{tabularx}
+            \subsection{Model 39}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+            \end{tabularx}
+            \subsection{Model 40}
+            
+            \begin{tabularx}{\textwidth}{lZ}
+                \textbf{Key} & \textbf{Type} \\
+                \hline
+                    token & string \\
+            \end{tabularx}
+        
+\end{document}

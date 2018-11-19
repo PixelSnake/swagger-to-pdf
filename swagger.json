@@ -1,0 +1,3825 @@
+{
+    "swagger": "2.0",
+    "host": "app.umsema.de",
+    "basePath": "/",
+    "schemes": [
+    "https"
+    ],
+    "info": {
+    "title": "UMSEMA API",
+    "version": "1.2.2"
+    },
+    "tags": [
+    {
+    "name": "default",
+    "description": "Resources which are handled directly by tresmo"
+    },
+    {
+    "name": "tegos",
+    "description": "Resources related to tegos"
+    },
+    {
+    "name": "verifier",
+    "description": "Resources redirecting to frontend pages"
+    },
+    {
+    "name": "external",
+    "description": "Resources which can be called with BASIC auth"
+    }
+    ],
+    "paths": {
+    "/verifiers/password-reset": {
+    "get": {
+    "summary": "Verify a password reset token.",
+    "operationId": "getVerifiersPasswordreset",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "token",
+    "in": "query",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "verifier"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Validation error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    }
+    }
+    }
+    },
+    "/verifiers/users": {
+    "get": {
+    "summary": "Verify an user.",
+    "operationId": "getVerifiersUsers",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "token",
+    "in": "query",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "verifier"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Validation error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    }
+    }
+    }
+    },
+    "/api/users/me": {
+    "get": {
+    "summary": "Get information about the logged in user.",
+    "operationId": "getApiUsersMe",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 3"
+    },
+    "description": "Object containing information about the logged-in user"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/materials": {
+    "get": {
+    "summary": "Get materials for this company.",
+    "operationId": "getApiCompaniesCompanyidMaterials",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 5",
+    "type": "array"
+    },
+    "description": "Collection of equipment objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/categories": {
+    "get": {
+    "summary": "Get categories for this company.",
+    "operationId": "getApiCompaniesCompanyidCategories",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 7",
+    "type": "array"
+    },
+    "description": "Collection of category objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/dates": {
+    "get": {
+    "summary": "Get dates per zipcode.",
+    "operationId": "getApiCompaniesCompanyidDates",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "zip",
+    "in": "query",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 9",
+    "type": "array"
+    },
+    "description": "Collection of dates"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/equipments": {
+    "get": {
+    "summary": "Get equipments for this company.",
+    "operationId": "getApiCompaniesCompanyidEquipments",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 11",
+    "type": "array"
+    },
+    "description": "Collection of equipment objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/contracttemplates": {
+    "get": {
+    "summary": "Get contract templates for this company.",
+    "operationId": "getApiCompaniesCompanyidContracttemplates",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 14",
+    "type": "array"
+    },
+    "description": "Collection of contractTemplate objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}": {
+    "get": {
+    "summary": "Get customer details.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomerid",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/customer"
+    },
+    "description": "Customer object"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/downloads/{type}": {
+    "get": {
+    "summary": "Get file.",
+    "operationId": "getApiCompaniesCompanyidDownloadsType",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "zip",
+    "pdf"
+    ],
+    "name": "type",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "mimeType",
+    "in": "path"
+    },
+    {
+    "type": "string",
+    "name": "ref",
+    "in": "query",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "Archive reference",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/ext/companies/{companyId}/users": {
+    "get": {
+    "summary": "Get all users.",
+    "operationId": "getApiExtCompaniesCompanyidUsers",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "owner",
+    "admin",
+    "normal"
+    ],
+    "name": "role",
+    "in": "query"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "external"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 18",
+    "type": "array"
+    },
+    "description": "OK"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/report-types": {
+    "get": {
+    "summary": "Get report types for this customer.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridReporttypes",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 21",
+    "type": "array"
+    },
+    "description": "Collection of report types objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites": {
+    "get": {
+    "summary": "Get task sites per customer.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksites",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 23",
+    "type": "array"
+    },
+    "description": "Collection of task site objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    },
+    "post": {
+    "summary": "Create a tasksite. User information will be added on backend call.",
+    "operationId": "postApiCompaniesCompanyidCustomersCustomeridTasksites",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "name",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "name2",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "address",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "postcode",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "city",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "phone",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "templateCode",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "templateVariant",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "number",
+    "name": "quantity",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "taskDate",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "comment",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "extDocNo",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "boolean",
+    "default": true,
+    "name": "sendEmail",
+    "in": "formData"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Missing Authentication"
+    },
+    "404": {
+    "description": "Not Found"
+    },
+    "409": {
+    "description": "Conflict"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/users": {
+    "get": {
+    "summary": "A list of users per customer",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridUsers",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 24",
+    "type": "array"
+    },
+    "description": "Collection of users by customer"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/contracts": {
+    "get": {
+    "summary": "Get contracts per customer.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridContracts",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 29",
+    "type": "array"
+    },
+    "description": "Collection of contracts"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/reports": {
+    "get": {
+    "summary": "Get a list of reports for this customer.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridReports",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "from",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "name": "to",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "name": "creatorMail",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "name": "status",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "name": "no",
+    "in": "query"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 31",
+    "type": "array"
+    },
+    "description": "Collection of reports"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    },
+    "post": {
+    "summary": "Create a report. User information will be added on backend call.",
+    "operationId": "postApiCompaniesCompanyidCustomersCustomeridReports",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "description": "Company id. 0 = documentus [momentan allein gültig]",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "description": "Customer id",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "code",
+    "in": "formData"
+    },
+    {
+    "type": "string",
+    "description": "Any object with valid key/value pairs.",
+    "name": "parameters",
+    "in": "formData"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/documents": {
+    "get": {
+    "summary": "Get documents per customer.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridDocuments",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "format": "date",
+    "description": "A start date",
+    "name": "from",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "format": "date",
+    "description": "An end date",
+    "name": "to",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "description": "Type of document",
+    "name": "type",
+    "in": "query"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 33",
+    "type": "array"
+    },
+    "description": "Collection of document objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}": {
+    "get": {
+    "summary": "Get one task site.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteid",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 22"
+    },
+    "description": "Task site object"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    }
+    }
+    },
+    "delete": {
+    "summary": "Delete single tasksite.",
+    "operationId": "deleteApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteid",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/reports/{reportId}": {
+    "get": {
+    "summary": "Get a specific report for this customer.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridReportsReportid",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "reportId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "One specific reports",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    },
+    "delete": {
+    "summary": "Delete report.",
+    "operationId": "deleteApiCompaniesCompanyidCustomersCustomeridReportsReportid",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "reportId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/ext/companies/{companyId}/customers/{customerId}/users": {
+    "get": {
+    "summary": "Get all users.",
+    "operationId": "getApiExtCompaniesCompanyidCustomersCustomeridUsers",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "external"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 24",
+    "type": "array"
+    },
+    "description": "OK"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/contracts": {
+    "get": {
+    "summary": "Get contracts per tasksite.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidContracts",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 29",
+    "type": "array"
+    },
+    "description": "Collection of contracts"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    }
+    }
+    },
+    "post": {
+    "summary": "Create a contract. User information will be added on backend call.",
+    "operationId": "postApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidContracts",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "templateCode",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "templateVariant",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "number",
+    "name": "quantity",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "taskDate",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "comment",
+    "in": "formData"
+    },
+    {
+    "type": "string",
+    "name": "extDocNo",
+    "in": "formData"
+    },
+    {
+    "type": "boolean",
+    "default": true,
+    "name": "sendEmail",
+    "in": "formData"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Missing Authentication"
+    },
+    "404": {
+    "description": "Not Found"
+    },
+    "409": {
+    "description": "Conflict"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/documents": {
+    "get": {
+    "summary": "Get documents per tasksite and customer.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidDocuments",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "format": "date",
+    "description": "A start date",
+    "name": "from",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "format": "date",
+    "description": "An end date",
+    "name": "to",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "description": "Type of document",
+    "name": "type",
+    "in": "query"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 33",
+    "type": "array"
+    },
+    "description": "Collection of document objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/users": {
+    "get": {
+    "summary": "A list of users per task site (no owner).",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidUsers",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 24",
+    "type": "array"
+    },
+    "description": "Collection of task site users"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/permissions": {
+    "get": {
+    "summary": "A list of task site permissions.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidPermissions",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 36",
+    "type": "array"
+    },
+    "description": "Get permissions for a task site, grouped by user (default) or invitation."
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/orders": {
+    "get": {
+    "summary": "A list of orders per task site.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidOrders",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "description": "Possible values are NEW, ACCEPTED, DISPATCHED, DONE, RELEASED",
+    "enum": [
+    "NEW",
+    "ACCEPTED",
+    "DISPATCHED",
+    "DONE",
+    "RELEASED"
+    ],
+    "name": "status",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "format": "date",
+    "description": "A start date",
+    "name": "from",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "format": "date",
+    "description": "An end date",
+    "name": "to",
+    "in": "query"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 39",
+    "type": "array"
+    },
+    "description": "Colleciton of task site objects"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    },
+    "post": {
+    "summary": "Create a new order. User information will be added on backend call.",
+    "operationId": "postApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidOrders",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "description": "Company id. 0 = documentus [momentan allein gültig]",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "description": "Customer id",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "description": "Task site id.",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "contractId",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "integer",
+    "name": "lineNo",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "taskDate",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "comment",
+    "in": "formData"
+    },
+    {
+    "type": "number",
+    "name": "quantity",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "boolean",
+    "default": true,
+    "name": "sendEmail",
+    "in": "formData"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/inventories": {
+    "get": {
+    "summary": "Get inventories per tasksite and customer.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidInventories",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "Collection of inventory objects",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/orders/{orderId}": {
+    "get": {
+    "summary": "Get single order.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidOrdersOrderid",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "integer",
+    "description": "Company id. 0 = documentus [momentan allein gültig]",
+    "enum": [
+    0
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "integer",
+    "description": "Customer id",
+    "x-constraint": {
+    "positive": true
+    },
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "description": "Task site id.",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "description": "Order id.",
+    "name": "orderId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 38"
+    },
+    "description": "Order object"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    },
+    "delete": {
+    "summary": "Delete single order.",
+    "operationId": "deleteApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidOrdersOrderid",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "orderId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/contracts/{contractId}/dates": {
+    "get": {
+    "summary": "Get contract dates per tasksite.",
+    "operationId": "getApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidContractsContractidDates",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "contractId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "lineNo",
+    "in": "query",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 9",
+    "type": "array"
+    },
+    "description": "Collection of contract dates"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    }
+    }
+    }
+    },
+    "/api/ext/companies/{companyId}/customers/{customerId}/owners/{email}": {
+    "delete": {
+    "summary": "Delete an owner.",
+    "operationId": "deleteApiExtCompaniesCompanyidCustomersCustomeridOwnersEmail",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0",
+    "1",
+    "2"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "email",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "external"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "403": {
+    "description": "Forbidden"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/tasksites/{tasksiteId}/contracts/{contractId}": {
+    "delete": {
+    "summary": "Delete a contract.",
+    "operationId": "deleteApiCompaniesCompanyidCustomersCustomeridTasksitesTasksiteidContractsContractid",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "tasksiteId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "contractId",
+    "in": "path",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "tegos"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Missing Authentication"
+    },
+    "404": {
+    "description": "Not Found"
+    },
+    "409": {
+    "description": "Conflict"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/sessions": {
+    "post": {
+    "summary": "Create a (user) session.",
+    "operationId": "postApiCompaniesCompanyidSessions",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0",
+    "1",
+    "2"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "x-format": {
+    "email": true
+    },
+    "name": "email",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "password",
+    "in": "formData",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "200": {
+    "schema": {
+    "$ref": "#/definitions/Model 40"
+    },
+    "description": "OK"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Missing Authentication"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/admins": {
+    "post": {
+    "summary": "Create an admin. Session authentication is mandatory.",
+    "operationId": "postApiCompaniesCompanyidCustomersCustomeridAdmins",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "x-format": {
+    "email": true
+    },
+    "name": "email",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "boolean",
+    "default": false,
+    "name": "documents",
+    "in": "formData"
+    },
+    {
+    "type": "boolean",
+    "default": false,
+    "name": "reports",
+    "in": "formData"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "security": "simple",
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Missing Authentication"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    },
+    "patch": {
+    "summary": "Update an admin. Session authentication is mandatory.",
+    "operationId": "patchApiCompaniesCompanyidCustomersCustomeridAdmins",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0",
+    "1",
+    "2"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "email",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "boolean",
+    "name": "documents",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "boolean",
+    "name": "reports",
+    "in": "formData",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "security": "simple",
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Missing Authentication"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/supports": {
+    "post": {
+    "summary": "Creates an support message to related email.",
+    "operationId": "postApiCompaniesCompanyidCustomersCustomeridSupports",
+    "parameters": [
+    {
+    "type": "string",
+    "name": "x-session-token",
+    "in": "header",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "enum": [
+    "CONTRACT",
+    "BILL",
+    "SERVICE"
+    ],
+    "name": "subject",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "phone",
+    "in": "formData"
+    },
+    {
+    "type": "string",
+    "name": "message",
+    "in": "formData",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "security": "simple",
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Missing Authentication"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/companies/{companyId}/customers/{customerId}/permissions": {
+    "post": {
+    "summary": "Create an user with all its permission. Session authentication is mandatory.",
+    "operationId": "postApiCompaniesCompanyidCustomersCustomeridPermissions",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "x-format": {
+    "email": true
+    },
+    "name": "email",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "array",
+    "items": {
+    "type": "object",
+    "properties": {
+    "tasksiteId": {
+    "type": "string"
+    }
+    },
+    "required": [
+    "tasksiteId"
+    ]
+    },
+    "collectionFormat": "multi",
+    "name": "permissions",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "comment",
+    "in": "formData"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Unauthorized"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    },
+    "patch": {
+    "summary": "Patch the users permission for one customer exclusively.",
+    "operationId": "patchApiCompaniesCompanyidCustomersCustomeridPermissions",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "x-format": {
+    "email": true
+    },
+    "name": "email",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "array",
+    "items": {
+    "type": "object",
+    "properties": {
+    "tasksiteId": {
+    "type": "string"
+    }
+    }
+    },
+    "collectionFormat": "multi",
+    "name": "permissions",
+    "in": "formData"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "200": {
+    "description": "User activated",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/ext/companies/{companyId}/customers/{customerId}/owners": {
+    "post": {
+    "summary": "Create an owner. BASIC authentication is mandatory.",
+    "operationId": "postApiExtCompaniesCompanyidCustomersCustomeridOwners",
+    "parameters": [
+    {
+    "type": "string",
+    "enum": [
+    "0"
+    ],
+    "name": "companyId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "customerId",
+    "in": "path",
+    "required": true
+    },
+    {
+    "type": "string",
+    "x-format": {
+    "email": true
+    },
+    "name": "email",
+    "in": "formData",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "tags": [
+    "external"
+    ],
+    "security": "simple",
+    "responses": {
+    "200": {
+    "description": "OK",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "401": {
+    "description": "Missing Authentication"
+    },
+    "404": {
+    "description": "Not Found"
+    },
+    "409": {
+    "description": "Conflict / User already has admin permissions"
+    }
+    }
+    }
+    },
+    "/api/users/activate": {
+    "patch": {
+    "summary": "Patch the user data structure to activate the account.",
+    "operationId": "patchApiUsersActivate",
+    "parameters": [
+    {
+    "type": "string",
+    "description": "Email address for the user who wants to be activated.",
+    "x-format": {
+    "email": true
+    },
+    "name": "email",
+    "in": "formData"
+    },
+    {
+    "type": "string",
+    "name": "token",
+    "in": "formData",
+    "required": true
+    },
+    {
+    "type": "string",
+    "name": "firstname",
+    "in": "formData"
+    },
+    {
+    "type": "string",
+    "name": "lastname",
+    "in": "formData"
+    },
+    {
+    "type": "string",
+    "name": "salutation",
+    "in": "formData"
+    },
+    {
+    "type": "string",
+    "name": "password",
+    "in": "formData",
+    "required": true
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "200": {
+    "description": "User activated",
+    "schema": {
+    "type": "string"
+    }
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    },
+    "/api/users/password": {
+    "patch": {
+    "summary": "Patch the user data structure to produce a token for a new password or set the new password.",
+    "operationId": "patchApiUsersPassword",
+    "parameters": [
+    {
+    "type": "string",
+    "description": "Email address for the user who wants to reset the password.",
+    "x-format": {
+    "email": true
+    },
+    "name": "email",
+    "in": "query"
+    },
+    {
+    "type": "string",
+    "name": "password",
+    "in": "formData"
+    }
+    ],
+    "consumes": [
+    "application/x-www-form-urlencoded"
+    ],
+    "responses": {
+    "202": {
+    "description": "Returns an email to the user if known"
+    },
+    "400": {
+    "description": "Bad Request / Validation Error"
+    },
+    "404": {
+    "description": "Not Found"
+    }
+    }
+    }
+    }
+    },
+    "definitions": {
+    "user": {
+    "type": "object",
+    "properties": {
+    "id": {
+    "type": "string"
+    },
+    "firstname": {
+    "type": "string"
+    },
+    "lastname": {
+    "type": "string"
+    },
+    "email": {
+    "type": "string"
+    },
+    "salutation": {
+    "type": "string"
+    },
+    "status": {
+    "type": "string"
+    },
+    "createdAt": {
+    "type": "string",
+    "format": "date"
+    },
+    "tokenExpireDate": {
+    "type": "string",
+    "format": "date"
+    }
+    }
+    },
+    "salesPerson": {
+    "type": "object",
+    "properties": {
+    "name": {
+    "type": "string",
+    "example": "Laetita Ory"
+    },
+    "email": {
+    "type": "string",
+    "example": "lo@tresmo.de",
+    "x-format": {
+    "email": true
+    }
+    },
+    "phoneNo": {
+    "type": "string",
+    "example": "0821/110"
+    },
+    "picture": {
+    "type": "string",
+    "description": "Image as Base64 encoded string.",
+    "example": "ABCD..."
+    }
+    }
+    },
+    "customer": {
+    "type": "object",
+    "properties": {
+    "no": {
+    "type": "string",
+    "description": "Primary key customer number",
+    "example": "40048"
+    },
+    "blocked": {
+    "type": "boolean",
+    "description": "If true, customer may not order"
+    },
+    "name": {
+    "type": "string",
+    "example": "Tresmo GmbH"
+    },
+    "name2": {
+    "type": "string",
+    "example": ""
+    },
+    "address": {
+    "type": "string",
+    "example": "Schrannenstr. 8"
+    },
+    "postcode": {
+    "type": "string",
+    "example": "86150"
+    },
+    "city": {
+    "type": "string",
+    "example": "Augsburg"
+    },
+    "salesPerson": {
+    "$ref": "#/definitions/salesPerson"
+    }
+    }
+    },
+    "Model 1": {
+    "type": "object",
+    "properties": {
+    "companyId": {
+    "type": "string"
+    },
+    "customerId": {
+    "type": "string"
+    },
+    "tasksiteId": {
+    "type": "string"
+    },
+    "userId": {
+    "type": "string"
+    },
+    "isOwner": {
+    "type": "boolean"
+    },
+    "isAdmin": {
+    "type": "boolean",
+    "default": true,
+    "x-alternatives": [
+    {
+    "type": "boolean",
+    "default": true
+    }
+    ]
+    },
+    "reports": {
+    "type": "boolean"
+    },
+    "documents": {
+    "type": "boolean"
+    }
+    }
+    },
+    "permissions": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 1"
+    }
+    },
+    "Model 2": {
+    "type": "object",
+    "properties": {
+    "customer": {
+    "$ref": "#/definitions/customer"
+    },
+    "permissions": {
+    "$ref": "#/definitions/permissions",
+    "type": "array"
+    }
+    },
+    "required": [
+    "permissions"
+    ]
+    },
+    "customers": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 2"
+    }
+    },
+    "Model 3": {
+    "type": "object",
+    "properties": {
+    "user": {
+    "$ref": "#/definitions/user"
+    },
+    "customers": {
+    "$ref": "#/definitions/customers",
+    "type": "array"
+    }
+    },
+    "required": [
+    "customers"
+    ]
+    },
+    "Model 4": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string",
+    "example": "V000815"
+    },
+    "description": {
+    "type": "string",
+    "example": "Datenträger"
+    },
+    "description2": {
+    "type": "string",
+    "example": "Sicherungsbänder und Festplatten"
+    },
+    "comment": {
+    "type": "string",
+    "example": "Röntgenbilder, Festplatten nur bis 3,5 Zoll, Mikrofischbogen nur bis 80 Zoll."
+    },
+    "iconRef": {
+    "type": "string",
+    "example": "icon_ref"
+    }
+    }
+    },
+    "Model 5": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 4"
+    }
+    },
+    "Model 6": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string",
+    "example": "V000815"
+    },
+    "description": {
+    "type": "string",
+    "example": "Aktenvernichtung"
+    },
+    "description2": {
+    "type": "string",
+    "example": "Vernichtung von vertraulichem Schriftgut."
+    },
+    "comment": {
+    "type": "string",
+    "example": "Bitte beachten: Bei Aktenordnern bitte die Klammern entfernen."
+    },
+    "iconRef": {
+    "type": "string",
+    "example": "Aktenvernichtung"
+    }
+    }
+    },
+    "Model 7": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 6"
+    }
+    },
+    "Model 8": {
+    "type": "object",
+    "properties": {
+    "date": {
+    "type": "string",
+    "example": "2017-03-30"
+    },
+    "available": {
+    "type": "boolean"
+    },
+    "type": {
+    "type": "string",
+    "example": "standard",
+    "enum": [
+    "standard",
+    "order",
+    "cycle"
+    ]
+    },
+    "orderNo": {
+    "type": "string",
+    "example": "A52412"
+    }
+    }
+    },
+    "Model 9": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 8"
+    }
+    },
+    "Model 10": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string",
+    "example": "RW 350"
+    },
+    "description": {
+    "type": "string",
+    "example": "RW 350 Behälter"
+    },
+    "description2": {
+    "type": "string",
+    "example": "Vertrauliches Schriftgut"
+    },
+    "comment": {
+    "type": "string",
+    "example": "Dieser Behälter fasst 35 Leitz Ordner."
+    },
+    "iconRef": {
+    "type": "string",
+    "example": "RW_350"
+    },
+    "height": {
+    "type": "number"
+    },
+    "width": {
+    "type": "number"
+    },
+    "depth": {
+    "type": "number"
+    },
+    "volume": {
+    "type": "number"
+    }
+    }
+    },
+    "Model 11": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 10"
+    }
+    },
+    "Model 12": {
+    "type": "object",
+    "properties": {
+    "lineNo": {
+    "type": "string",
+    "example": "10000"
+    },
+    "equipmentType": {
+    "type": "number",
+    "description": "Possible values are `1 = submission`, `2 = pickup`, `3 is exchange`, `4 is clearance`",
+    "enum": [
+    0,
+    1,
+    2,
+    3,
+    4
+    ]
+    },
+    "description": {
+    "type": "string",
+    "example": "Zustellung"
+    },
+    "quantity": {
+    "type": "string"
+    },
+    "uom": {
+    "type": "string",
+    "description": "Unit of measure"
+    }
+    }
+    },
+    "lines": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 12"
+    }
+    },
+    "Model 13": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string",
+    "example": "RW240"
+    },
+    "variant": {
+    "type": "string",
+    "example": "DAV"
+    },
+    "description": {
+    "type": "string",
+    "example": "RW240_DAV Aktenvernichtung (dauer)"
+    },
+    "equipmentCode": {
+    "type": "string",
+    "example": "RW 240 SI"
+    },
+    "categoryCode": {
+    "type": "string",
+    "example": "AV Spezial"
+    },
+    "materialCode": {
+    "type": "string",
+    "example": "200101 AV (P)"
+    },
+    "lines": {
+    "$ref": "#/definitions/lines",
+    "type": "array"
+    }
+    },
+    "required": [
+    "lines"
+    ]
+    },
+    "Model 14": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 13"
+    }
+    },
+    "Model 15": {
+    "type": "object",
+    "properties": {
+    "customerId": {
+    "type": "string"
+    },
+    "permissions": {
+    "$ref": "#/definitions/permissions",
+    "type": "array"
+    }
+    },
+    "required": [
+    "permissions"
+    ]
+    },
+    "Model 16": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 15"
+    }
+    },
+    "Model 17": {
+    "type": "object",
+    "properties": {
+    "user": {
+    "$ref": "#/definitions/user"
+    },
+    "customers": {
+    "$ref": "#/definitions/Model 16",
+    "type": "array"
+    }
+    },
+    "required": [
+    "customers"
+    ]
+    },
+    "Model 18": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 17"
+    }
+    },
+    "Model 19": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string",
+    "example": "P1"
+    },
+    "title": {
+    "type": "string",
+    "example": "Buchungsdatum"
+    },
+    "description": {
+    "type": "string",
+    "example": "Einschränkung des Datumsbereichs"
+    },
+    "type": {
+    "type": "string"
+    }
+    }
+    },
+    "parameters": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 19"
+    }
+    },
+    "Model 20": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string",
+    "example": "R0001"
+    },
+    "title": {
+    "type": "string",
+    "example": "Rechnungen pro Standort"
+    },
+    "description": {
+    "type": "string",
+    "example": "Erstellt eine Excel Datei"
+    },
+    "mimeType": {
+    "type": "string",
+    "example": "test"
+    },
+    "parameters": {
+    "$ref": "#/definitions/parameters",
+    "type": "array"
+    }
+    }
+    },
+    "Model 21": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 20"
+    }
+    },
+    "Model 22": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string",
+    "description": "Code + number of customer = primary key, can be temporary or persistent",
+    "example": "40048"
+    },
+    "name": {
+    "type": "string",
+    "example": "Tresmo GmbH"
+    },
+    "name2": {
+    "type": "string",
+    "example": ""
+    },
+    "address": {
+    "type": "string",
+    "example": "Bahnhofstraße 5"
+    },
+    "postcode": {
+    "type": "string",
+    "example": "86150"
+    },
+    "city": {
+    "type": "string",
+    "example": "Augsburg"
+    },
+    "status": {
+    "type": "string",
+    "example": "NEW",
+    "enum": [
+    "NEW",
+    "ACCEPTED"
+    ]
+    }
+    }
+    },
+    "Model 23": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 22"
+    }
+    },
+    "Model 24": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 3"
+    }
+    },
+    "Model 25": {
+    "type": "object",
+    "properties": {
+    "code": {
+    "type": "string"
+    },
+    "description": {
+    "type": "string"
+    },
+    "nextDate": {
+    "type": "string"
+    },
+    "lastDate": {
+    "type": "string"
+    }
+    }
+    },
+    "cycle": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 25"
+    }
+    },
+    "Model 26": {
+    "type": "object",
+    "properties": {
+    "lineNo": {
+    "type": "string",
+    "example": "10000"
+    },
+    "equipmentType": {
+    "type": "number",
+    "description": "Possible values are `1 = submission`, `2 = pickup`, `3 is exchange`, `4 is clearance`",
+    "enum": [
+    0,
+    1,
+    2,
+    3,
+    4
+    ]
+    },
+    "description": {
+    "type": "string",
+    "example": "Abholung"
+    },
+    "quantity": {
+    "type": "string"
+    },
+    "uom": {
+    "type": "string",
+    "description": "Unit of measure"
+    },
+    "cycle": {
+    "$ref": "#/definitions/cycle",
+    "type": "array"
+    }
+    }
+    },
+    "Model 27": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 26"
+    }
+    },
+    "Model 28": {
+    "type": "object",
+    "properties": {
+    "no": {
+    "type": "string",
+    "example": "V000815"
+    },
+    "taskSiteCode": {
+    "type": "string",
+    "example": "60102"
+    },
+    "description": {
+    "type": "string",
+    "example": "Aktenvernichtung"
+    },
+    "equipmentCode": {
+    "type": "string",
+    "example": "RW 240 SI"
+    },
+    "categoryCode": {
+    "type": "string",
+    "example": "AV Spezial"
+    },
+    "materialCode": {
+    "type": "string",
+    "example": "200101 AV (P)"
+    },
+    "status": {
+    "type": "string",
+    "example": "NEW",
+    "enum": [
+    "NEW",
+    "ACCEPTED"
+    ]
+    },
+    "lines": {
+    "$ref": "#/definitions/Model 27",
+    "type": "array"
+    }
+    },
+    "required": [
+    "lines"
+    ]
+    },
+    "Model 29": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 28"
+    }
+    },
+    "Model 30": {
+    "type": "object",
+    "properties": {
+    "no": {
+    "type": "string",
+    "example": "A1234221"
+    },
+    "code": {
+    "type": "string",
+    "example": "A213"
+    },
+    "createdAt": {
+    "type": "string",
+    "example": "2017-04-03"
+    },
+    "title": {
+    "type": "string",
+    "example": "Auftragsauswertung"
+    },
+    "status": {
+    "type": "string",
+    "example": "NEW",
+    "enum": [
+    "NEW",
+    "EMPTY",
+    "PROCESSING",
+    "DONE",
+    "ERROR",
+    "DELETED"
+    ]
+    },
+    "statusMessage": {
+    "type": "string",
+    "example": "Dauer von 35 Sekunden"
+    },
+    "mimeType": {
+    "type": "string",
+    "example": "application/pdf"
+    },
+    "creatorMail": {
+    "type": "string",
+    "example": "peter.lustig@tegos.de"
+    }
+    }
+    },
+    "Model 31": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 30"
+    }
+    },
+    "Model 32": {
+    "type": "object",
+    "properties": {
+    "no": {
+    "type": "string",
+    "example": "40048"
+    },
+    "taskSiteCode": {
+    "type": "string",
+    "example": "E000790"
+    },
+    "postingDate": {
+    "type": "string",
+    "example": "2017-05-26"
+    },
+    "documentDate": {
+    "type": "string",
+    "example": "2017-06-04"
+    },
+    "amount": {
+    "type": "number",
+    "example": "1196.2"
+    },
+    "amountInclVAT": {
+    "type": "number",
+    "example": "1423.48"
+    },
+    "type": {
+    "type": "number",
+    "description": "1 = sales invoice, 2 = sales credit memo, 3 = purchase invoice, 4 = purchase credit number",
+    "enum": [
+    1,
+    2,
+    3,
+    4
+    ]
+    },
+    "archiveRef": {
+    "type": "string",
+    "example": "$(#REISSW08)\\DEBRW08,00016039,001"
+    },
+    "zipRef": {
+    "type": "string",
+    "description": "Contains all shipment information of current document.",
+    "example": "1-R026031"
+    }
+    }
+    },
+    "Model 33": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 32"
+    }
+    },
+    "Model 34": {
+    "type": "object",
+    "properties": {
+    "id": {
+    "type": "string"
+    },
+    "email": {
+    "type": "string"
+    },
+    "firstname": {
+    "type": "string"
+    },
+    "lastname": {
+    "type": "string"
+    }
+    }
+    },
+    "Model 35": {
+    "type": "object",
+    "properties": {
+    "createdAt": {
+    "type": "string",
+    "format": "date"
+    },
+    "user": {
+    "$ref": "#/definitions/Model 34"
+    },
+    "tasksiteId": {
+    "type": "string"
+    },
+    "customerId": {
+    "type": "string"
+    },
+    "companyId": {
+    "type": "string"
+    },
+    "type": {
+    "type": "string"
+    }
+    }
+    },
+    "Model 36": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 35"
+    }
+    },
+    "Model 37": {
+    "type": "object",
+    "properties": {
+    "timestamp": {
+    "type": "string",
+    "format": "date"
+    },
+    "name": {
+    "type": "string"
+    },
+    "type": {
+    "type": "string",
+    "enum": [
+    "SUBMISSION",
+    "PICKUP",
+    "ACCEPTANCE",
+    "DESTRUCTION"
+    ]
+    },
+    "trackingNo": {
+    "type": "string"
+    },
+    "description": {
+    "type": "string"
+    }
+    }
+    },
+    "tracking": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 37"
+    }
+    },
+    "creator": {
+    "type": "object",
+    "properties": {
+    "firstName": {
+    "type": "string"
+    },
+    "lastName": {
+    "type": "string"
+    },
+    "email": {
+    "type": "string",
+    "x-format": {
+    "email": true
+    }
+    }
+    }
+    },
+    "Model 38": {
+    "type": "object",
+    "properties": {
+    "no": {
+    "type": "string",
+    "example": "40048"
+    },
+    "taskSiteCode": {
+    "type": "string"
+    },
+    "equipmentCode": {
+    "type": "string",
+    "example": "RW 240 SI"
+    },
+    "categoryCode": {
+    "type": "string",
+    "example": "AV Spezial"
+    },
+    "materialCode": {
+    "type": "string",
+    "example": "200101 AV (P)"
+    },
+    "deliveryNo": {
+    "type": "string",
+    "example": "LS1098030"
+    },
+    "lineNo": {
+    "type": "integer",
+    "example": "10000"
+    },
+    "equipmentType": {
+    "type": "number",
+    "description": "Possible values are `1 = submission`, `2 = pickup`, `3 is exchange`, `4 is clearance`",
+    "enum": [
+    0,
+    1,
+    2,
+    3,
+    4
+    ]
+    },
+    "description": {
+    "type": "string"
+    },
+    "uom": {
+    "type": "string",
+    "description": "Unit of measure"
+    },
+    "quantity": {
+    "type": "number"
+    },
+    "taskDate": {
+    "type": "string"
+    },
+    "status": {
+    "type": "string",
+    "description": "Possible values are NEW, ACCEPTED, DISPATCHED, DONE, RELEASED",
+    "enum": [
+    "NEW",
+    "ACCEPTED",
+    "DISPATCHED",
+    "DONE",
+    "RELEASED"
+    ]
+    },
+    "source": {
+    "type": "string",
+    "enum": [
+    "ORDER",
+    "CONTRACT",
+    "TASKSITE"
+    ]
+    },
+    "comment": {
+    "type": "string"
+    },
+    "isFromCycle": {
+    "type": "boolean"
+    },
+    "archiveRef": {
+    "type": "string"
+    },
+    "tracking": {
+    "$ref": "#/definitions/tracking",
+    "type": "array"
+    },
+    "creator": {
+    "$ref": "#/definitions/creator"
+    }
+    }
+    },
+    "Model 39": {
+    "type": "array",
+    "items": {
+    "$ref": "#/definitions/Model 38"
+    }
+    },
+    "Model 40": {
+    "type": "object",
+    "properties": {
+    "token": {
+    "type": "string"
+    }
+    },
+    "required": [
+    "token"
+    ]
+    }
+    }
+    }

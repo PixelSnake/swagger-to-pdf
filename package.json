@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon . -w src -w tex/doc.tex.mustache -- -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Thomas Neumüller",
   "license": "ISC",
   "dependencies": {
     "cli-args": "^2.0.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "md5": "^2.2.1",
+    "mustache": "^3.0.1",
+    "superagent": "^4.0.0-beta.5"
   }
 }
