@@ -5,7 +5,7 @@ const mustache = require('mustache')
 const md5 = require('md5')
 const { spawn } = require('child_process')
 
-function generate(json, args) {
+function generate(json, args, config) {
     const template = fs.readFileSync(
         path.join(__dirname, '..', 'tex', 'doc.tex.mustache')
     ).toString()
@@ -32,7 +32,7 @@ function generate(json, args) {
                                 const response = route.responses[status]
                                 let schema = '-'
                                 let schemaLink
-                                if (response.schema && response.schema.$ref) {
+                                if (response.schema && response.schema.$ref && config.include.definitions) {
                                     schema = response.schema.$ref.split('/')[2]
                                     schemaLink = md5(schema)
                                 } else if (response.schema) {
@@ -82,7 +82,11 @@ function generate(json, args) {
         title,
         version,
         tags,
-        definitions
+        includeTags: config.include.tags,
+        definitions,
+        includeDefinitions: config.include.definitions,
+
+        config
     }
     
     mustache.escape = texEscape

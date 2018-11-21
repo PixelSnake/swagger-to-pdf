@@ -1,0 +1,20 @@
+{
+    "language": "english",
+    "include": {
+        "tags": true,
+        "definitions": true
+    },
+    "font": {
+        "family": "Fira Sans",
+        "bold": "Fira Sans Medium"
+    },
+    "colors": {
+        "primary": "00aeef",
+        "methods": {
+            "get": "0096CD",
+            "post": "009867",
+            "patch": "D09000",
+            "delete": "D0002F"
+        }
+    }
+}

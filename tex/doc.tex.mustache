@@ -3,27 +3,46 @@
 
 \documentclass[10pt]{article}
 
-\usepackage[ngerman]{babel}
 \usepackage{xcolor}
 \usepackage{xltxtra,fontspec,xunicode}
 \usepackage{tabularx}
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage[framemethod=tikz]{mdframed}
+\usepackage{setspace}
+\usepackage{sectsty}
+\usepackage{fancyhdr}
 
-\setromanfont[Numbers=Uppercase]{Fira Sans}
-\setmainfont[BoldFont={Fira Sans Medium}]{Fira Sans}
+!(#config)
+    !(#language)
+        \usepackage[main=!(.)]{babel}
+    !(/language)
 
-\definecolor{tresmo}{HTML}{00aeef}
+    !(#font)
+        \setromanfont[Numbers=Uppercase]{!(family)}
+        !(#bold) \setmainfont[BoldFont={!(.)}]{!(family)} !(/bold)
+    !(/font)
+
+    !(#colors)
+        !(#primary)
+            \definecolor{primary}{HTML}{!(.)}
+            \chapterfont{\color{primary}}
+            \sectionfont{\color{primary}}
+        !(/primary)
+
+        !(#methods)
+            !(#get) \definecolor{get}{HTML}{!(.)} !(/get)
+            !(#post) \definecolor{post}{HTML}{!(.)} !(/post)
+            !(#patch) \definecolor{patch}{HTML}{!(.)} !(/patch)
+            !(#delete) \definecolor{delete}{HTML}{!(.)} !(/delete)
+        !(/methods)
+    !(/colors)
+!(/config)
 
 \def\arraystretch{1.5}
+\pagestyle{fancy}
 
 \newcolumntype{Z}{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}X}
-
-\definecolor{get}{HTML}{0f6ab4}
-\definecolor{post}{HTML}{10a54a}
-\definecolor{patch}{HTML}{D38042}
-\definecolor{delete}{HTML}{a41e22}
 
 \mdfdefinestyle{get}{
     roundcorner=2pt,
@@ -78,78 +97,91 @@
    \prevdepth=\tpd}
 
 \begin{document}
-    \title{\color{tresmo}\textbf{!(title)}}
+    \title{\color{primary}\textbf{!(title)}}
     \author{Version !(version)}
     \maketitle
     \newpage
 
+    \onehalfspacing
     \tableofcontents
+    \singlespacing
 
-    !(#tags)
+    !(#includeTags)
+        !(#tags)
+            \newpage
+            \section{!(description)}
+
+            !(#paths)
+                \vspace{.5cm}
+                \begin{absolutelynopagebreak}
+                    \addcontentsline{toc}{subsection}{!(summary)}
+                    \label{route:!(label)}
+                    \method{!(method)}{\url{!({path})}}
+
+                    \begin{flushleft}
+                        !(summary)
+                        \vspace{.25cm}
+
+                        \paragraph{Parameters}\mbox{}\\
+                        \vspace{.25cm}
+                        \begin{tabularx}{\textwidth}{lXlr}
+                            \textbf{Name} & \textbf{Where} & \textbf{Type} \\
+                            \hline
+                            !(#parameters)
+                                !(name) & !(in) & !(type) &
+                                !(#required) \textbf{required} !(/required)
+                                !(^required) optional !(/required)
+                                \\
+                            !(/parameters)
+                        \end{tabularx}
+
+                        \paragraph{Response}\mbox{}\\
+                        \vspace{.25cm}
+                        \begin{tabularx}{\textwidth}{lXZ}
+                            \textbf{Status} & & \textbf{Response} \\
+                            \hline
+                            !(#responses)
+                                !(status) & !(description) & 
+                                !(#schemaLink)
+                                    \nameref{!(schemaLink)} \\
+                                !(/schemaLink)
+                                !(^schemaLink)
+                                    !(schema) \\
+                                !(/schemaLink)
+                            !(/responses)
+                        \end{tabularx}
+                    \end{flushleft}
+                \end{absolutelynopagebreak}
+            !(/paths)
+        !(/tags)
+    !(/includeTags)
+
+    !(#includeDefinitions)
         \newpage
-        \section{!(description)}
-
-        !(#paths)
-            \vspace{.5cm}
-            \begin{absolutelynopagebreak}
-                \addcontentsline{toc}{subsection}{!(summary)}
-                \label{route:!(label)}
-                \method{!(method)}{\url{!({path})}}
-
-                \begin{flushleft}
-                    !(summary)
-                    \vspace{.25cm}
-
-                    \paragraph{Parameters}\mbox{}\\
-                    \vspace{.25cm}
-                    \begin{tabularx}{\textwidth}{lXlr}
-                        \textbf{Name} & \textbf{Where} & \textbf{Type} \\
-                        \hline
-                        !(#parameters)
-                            !(name) & !(in) & !(type) &
-                            !(#required) \textbf{required} !(/required)
-                            !(^required) optional !(/required)
-                            \\
-                        !(/parameters)
-                    \end{tabularx}
-
-                    \paragraph{Response}\mbox{}\\
-                    \vspace{.25cm}
-                    \begin{tabularx}{\textwidth}{lXZ}
-                        \textbf{Status} & & \textbf{Response} \\
-                        \hline
-                        !(#responses)
-                            !(status) & !(description) & 
-                            !(#schemaLink)
-                                \nameref{!(schemaLink)} \\
-                            !(/schemaLink)
-                            !(^schemaLink)
-                                !(schema) \\
-                            !(/schemaLink)
-                        !(/responses)
-                    \end{tabularx}
-                \end{flushleft}
-            \end{absolutelynopagebreak}
-        !(/paths)
-    !(/tags)
-
-    \section{Models}
-        !(#definitions)
-            \subsection{!(name)}
-            \label{!(label)}
-            
-            !(^empty)
-                \begin{tabularx}{\textwidth}{lZ}
-                    \textbf{Key} & \textbf{Type} \\
-                    \hline
-                    !(#properties)
-                        !(name) & !(type) \\
-                    !(/properties)
-                \end{tabularx}
-            !(/empty)
-            !(#empty)
-                This model is empty
-            !(/empty)
-        !(/definitions)
+        \section{Models}
+            !(#definitions)
+                \begin{absolutelynopagebreak}
+                    \addcontentsline{toc}{subsection}{!(name)}
+                    \paragraph{!(name)}
+                    \label{!(label)}
+                    \mbox{}\\
+                    
+                    \begin{flushleft}
+                        !(^empty)
+                                \begin{tabularx}{\textwidth}{lZ}
+                                    \textbf{Key} & \textbf{Type} \\
+                                    \hline
+                                    !(#properties)
+                                        !(name) & !(type) \\
+                                    !(/properties)
+                                \end{tabularx}
+                        !(/empty)
+                        !(#empty)
+                            This model is empty
+                        !(/empty)
+                    \end{flushleft}
+                \end{absolutelynopagebreak}
+            !(/definitions)
+    !(/includeDefinitions)
         
 \end{document}

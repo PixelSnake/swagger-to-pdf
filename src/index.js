@@ -2,6 +2,7 @@ const Cli = require('./command-line')
 const http = require('superagent')
 const fs = require('fs')
 const SwaggerTex = require('./swagger-tex')
+const Config = require('./config')
 
 async function run() {
     Cli.argument.default('swagger.json').short('s').long('source').description('The swagger.json source (either a file path or an URL)')
@@ -12,7 +13,9 @@ async function run() {
     const args = Cli.arguments
     const doc = await getFile(args.source)
 
-    SwaggerTex.generate(doc, args)
+    const config = Config.load()
+
+    SwaggerTex.generate(doc, args, config)
 }
 
 async function getFile(uri) {
